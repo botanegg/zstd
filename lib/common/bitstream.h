@@ -141,7 +141,7 @@ MEM_STATIC unsigned BIT_highbit32 (U32 val)
 {
     assert(val != 0);
     {
-#   if defined(_MSC_VER)   /* Visual */
+#   if defined(_MSC_VER) && !defined(ZSTD_WINMOBILE)   /* Visual */
 #       if STATIC_BMI2 == 1
 		return _lzcnt_u32(val) ^ 31;
 #       else
