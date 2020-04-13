@@ -25,7 +25,11 @@ extern "C" {
 /*-****************************************
 *  Compiler specifics
 ******************************************/
-#if defined(_MSC_VER)   /* Visual Studio */
+#if defined(WIN32_PLATFORM_WFSP) || defined(WIN32_PLATFORM_PSPC) || defined(UNDER_CE) || defined(WINCE)
+# define ZSTD_WINMOBILE     1
+#endif
+
+#if defined(_MSC_VER) && !defined(ZSTD_WINMOBILE)   /* Visual Studio */
 #   include <stdlib.h>  /* _byteswap_ulong */
 #   include <intrin.h>  /* _byteswap_* */
 #endif
@@ -273,7 +277,7 @@ MEM_STATIC void MEM_write64(void* memPtr, U64 value)
 
 MEM_STATIC U32 MEM_swap32(U32 in)
 {
-#if defined(_MSC_VER)     /* Visual Studio */
+#if defined(_MSC_VER) && !defined(ZSTD_WINMOBILE)     /* Visual Studio */
     return _byteswap_ulong(in);
 #elif (defined (__GNUC__) && (__GNUC__ * 100 + __GNUC_MINOR__ >= 403)) \
   || (defined(__clang__) && __has_builtin(__builtin_bswap32))
@@ -288,7 +292,7 @@ MEM_STATIC U32 MEM_swap32(U32 in)
 
 MEM_STATIC U64 MEM_swap64(U64 in)
 {
-#if defined(_MSC_VER)     /* Visual Studio */
+#if defined(_MSC_VER) && !defined(ZSTD_WINMOBILE)     /* Visual Studio */
     return _byteswap_uint64(in);
 #elif (defined (__GNUC__) && (__GNUC__ * 100 + __GNUC_MINOR__ >= 403)) \
   || (defined(__clang__) && __has_builtin(__builtin_bswap64))

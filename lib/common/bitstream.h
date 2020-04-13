@@ -159,7 +159,7 @@ MEM_STATIC unsigned BIT_highbit32 (U32 val)
 {
     assert(val != 0);
     {
-#   if defined(_MSC_VER)   /* Visual */
+#   if defined(_MSC_VER) && !defined(ZSTD_WINMOBILE)   /* Visual */
         unsigned long r=0;
         _BitScanReverse ( &r, val );
         return (unsigned) r;

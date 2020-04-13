@@ -295,7 +295,7 @@ MEM_STATIC U32 ZSTD_highbit32(U32 val)   /* compress, dictBuilder, decodeCorpus 
 {
     assert(val != 0);
     {
-#   if defined(_MSC_VER)   /* Visual */
+#   if defined(_MSC_VER) && !defined(ZSTD_WINMOBILE)  /* Visual */
         unsigned long r=0;
         _BitScanReverse(&r, val);
         return (unsigned)r;

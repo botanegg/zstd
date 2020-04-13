@@ -20,7 +20,7 @@
 
 #include "mem.h"
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(ZSTD_WINMOBILE)
 #include <intrin.h>
 #endif
 
