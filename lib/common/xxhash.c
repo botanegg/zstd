@@ -144,8 +144,14 @@ static U64 XXH_read64(const void* memPtr)
 
 /* Note : although _rotl exists for minGW (GCC under windows), performance seems poor */
 #if defined(_MSC_VER)
+/* There are troubles with _rotl64 on WinCE/MIPS */
+#if defined(ZSTD_WINMOBILE)
+#  define XXH_rotl32(x,r) ((x << r) | (x >> (32 - r)))
+#  define XXH_rotl64(x,r) ((x << r) | (x >> (64 - r)))
+#else
 #  define XXH_rotl32(x,r) _rotl(x,r)
 #  define XXH_rotl64(x,r) _rotl64(x,r)
+#endif
 #else
 #if defined(__ICCARM__)
 #  include <intrinsics.h>
