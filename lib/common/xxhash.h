@@ -79,6 +79,14 @@ extern "C" {
 typedef enum { XXH_OK=0, XXH_ERROR } XXH_errorcode;
 
 
+/*-****************************************
+*  Compiler specifics
+******************************************/
+#if defined(WIN32_PLATFORM_WFSP) || defined(WIN32_PLATFORM_PSPC) || defined(UNDER_CE) || defined(WINCE)
+# define ZSTD_WINMOBILE     1
+#endif
+
+
 /* ****************************
 *  API modifier
 ******************************/
