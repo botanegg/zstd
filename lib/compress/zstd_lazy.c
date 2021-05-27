@@ -1069,7 +1069,7 @@ static ZSTD_VecMask ZSTD_Vec256_cmpMask8(ZSTD_Vec256 x, ZSTD_Vec256 y) {
  * Basically counting the nb of trailing zeroes.
  */
 static U32 ZSTD_VecMask_next(ZSTD_VecMask val) {
-#   if defined(_MSC_VER)   /* Visual */
+#   if defined(_MSC_VER) && !defined(ZSTD_WINMOBILE)  /* Visual */
     unsigned long r=0;
     return _BitScanForward(&r, val) ? (U32)r : 0;
 #   elif defined(__GNUC__) && (__GNUC__ >= 3)
